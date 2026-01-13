@@ -2,6 +2,7 @@ package rvt;
 
 public class App {
     public static void main(String[] args) {
-        // Your code goes here...
+        UserInterface app = new UserInterface();
+        app.start();
     }
 }
