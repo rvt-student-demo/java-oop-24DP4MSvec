@@ -25,6 +25,8 @@ public class UserInterface {
                 list.remove(number);
             } else if (answer.equals("list")){
                 list.print();
+            } else if (answer.equals("last")){
+                list.printLastId();
             }
         }
     }
