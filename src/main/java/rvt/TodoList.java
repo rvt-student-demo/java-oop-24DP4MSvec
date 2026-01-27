@@ -79,15 +79,52 @@ public class TodoList {
         }
     }
 
-    public void remove(int number) {
-        int removeId = number - 1;
+   public void remove(int id) {
+    int indexToRemove = -1;
 
-        if (removeId >= 0 && removeId < tasks.size()) {
-            tasks.remove(removeId);
-            rewriteFile();
-            nextId -= 1;
+    // Atrodam elementu ar konkrēto ID
+    for (int i = 0; i < tasks.size(); i++) {
+        String[] parts = tasks.get(i).split(",", 2);
+        int taskId = Integer.parseInt(parts[0]);
+
+        if (taskId == id) {
+            indexToRemove = i;
+            break;
         }
     }
+
+    if (indexToRemove == -1) {
+        System.out.println("Uzdevums ar ID " + id + " nav atrasts.");
+        return;
+    }
+
+    // Dzēšam no saraksta
+    tasks.remove(indexToRemove);
+
+    // Pārrēķinam ID
+    renumberTasks();
+
+    // Atjaunojam failu
+    updateFile();
+}
+
+
+private void renumberTasks() {
+    ArrayList<String> updatedTasks = new ArrayList<>();
+    int newId = 1;
+
+    for (String task : tasks) {
+        String[] parts = task.split(",", 2);
+        updatedTasks.add(newId + "," + parts[1]);
+        newId++;
+    }
+
+    tasks = updatedTasks;
+    nextId = newId;
+}
+
+
+
 
     private void rewriteFile(){
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
