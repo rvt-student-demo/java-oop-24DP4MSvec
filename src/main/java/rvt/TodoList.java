@@ -19,30 +19,33 @@ public class TodoList {
         loadFromFile();
         
     }
+
+    public boolean checkEventStrings(String value) {
+        if (value == null || value.length() < 3) {
+            return false;
+        }
+        return value.matches("^[a-zA-Z0-9āčēģīķļņšūžĀČĒĢĪĶĻŅŠŪŽ ]*$");
+    }
     private void loadFromFile(){
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = br.readLine()) != null) {
                 if (!line.trim().isEmpty()) {
-                    this.tasks.add(line);
-                    index++;
-                    String[] parts = line.split(",");
-                    int currentId = Integer.parseInt(parts[0]);
-                    if (currentId >= nextId) {
-                        nextId = currentId + 1;
+                    String[] parts = line.split(",", 2);
+                    if (parts.length > 1) {
+                        this.tasks.add(parts[1]);
+                    } else {
+                        this.tasks.add(line);
                     }
-                    
                 }
             }
+            this.nextId = tasks.size() + 1;
             getLastId();
         } catch (IOException e) {
             System.out.println("Error reading file.");
             }
     }
 
-    private boolean updateFile(){
-        return false;
-    }
 
     private int getLastId(){
         int lastId = index;
@@ -51,13 +54,15 @@ public class TodoList {
     }
 
     public void add(String taskName) {
-        String formattedTask = nextId + "," + taskName;
+        if (!checkEventStrings(taskName)) {
+            System.out.println("Kļūda: Aktivitatei jāsatur tikai burti/cipari un jābūt vismaz 3 simbolus garai!");
+            return;
+        }
 
-        this.tasks.add(formattedTask);
-
+        this.tasks.add(taskName);
+        String formattedTask = this.nextId + "," + taskName;
         saveTaskToFile(formattedTask);
-
-        nextId++;
+        this.nextId++;
     }
 
     private void saveTaskToFile(String taskLine){
@@ -67,32 +72,36 @@ public class TodoList {
         } catch (IOException e) {
             System.out.println("Error writing to file: " + e.getMessage());
         }
+
     }
     public void printLastId(){
-        int lastId = index;
-        System.out.println(lastId);
+        System.out.println(tasks.size());
     }
 
     public void print() {
         for (int i = 0; i < tasks.size(); i++) {
-            System.out.println(tasks.get(i));
+            System.out.println((i + 1) + "." + tasks.get(i));
         }
     }
 
     public void remove(int number) {
-        int removeId = number - 1;
+        int indexToRemove = number - 1;
 
-        if (removeId >= 0 && removeId < tasks.size()) {
-            tasks.remove(removeId);
+        if (indexToRemove >= 0 && indexToRemove < tasks.size()) {
+            tasks.remove(indexToRemove);
             rewriteFile();
-            nextId -= 1;
+            this.nextId = tasks.size() + 1;
+        } else {
+            System.out.println("Invalid task number.");
         }
     }
 
     private void rewriteFile(){
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath))) {
-            for (String task : tasks) {
-                bw.write(task);
+            for (int i = 0; i < tasks.size(); i++) {
+                int newId = i + 1;
+                String taskName = tasks.get(i);
+                bw.write(newId + "," + taskName);
                 bw.newLine();
             }
         } catch (IOException e) {
