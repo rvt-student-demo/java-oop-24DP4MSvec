@@ -1,11 +1,18 @@
 package rvt.Online_Shop;
 
+import java.util.Scanner;
+
 public class App {
     public static void main(String[] args) {
-        Item item = new Item("milk", 4, 2);
-System.out.println("an item that contains 4 milks has the total price of " + item.price());
-System.out.println(item);
-item.increaseQuantity();
-System.out.println(item);
+       Warehouse warehouse = new Warehouse();
+    warehouse.addProduct("coffee", 5, 10);
+    warehouse.addProduct("milk", 3, 20);
+    warehouse.addProduct("cream", 2, 55);
+    warehouse.addProduct("bread", 7, 8);
+
+    Scanner scanner = new Scanner(System.in);
+
+    Store store = new Store(warehouse, scanner);
+    store.shop("John");
     }
 }
