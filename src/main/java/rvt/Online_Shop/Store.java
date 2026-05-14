@@ -29,7 +29,7 @@ public class Store {
             }
 
             if(this.warehouse.products().contains(product)){
-            int price = this.warehouse.price(product); // Fetch the real price
+            int price = this.warehouse.price(product);
             cart.add(product, price); 
             this.warehouse.take(product);
 }
