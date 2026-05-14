@@ -9,7 +9,7 @@ public class Warehouse {
     private String product;
     private int stock;
     private int price;
-
+  
     public void addProduct(String product, int price, int stock){
         this.stock = stock;
         this.product = product;
