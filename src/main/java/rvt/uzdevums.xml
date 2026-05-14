@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rvtkursi> 
+    <kurss id="1">
+        <nosaukums>Java OOP</nosaukums> 
+        <apraksts>Šis kurss ir par Java objektorientēto programmēšanu.</apraksts> 
+        <pasniedzejs>Jānis Bērziņš</pasniedzejs>
+        <ilgums>40</ilgums>
+        <studentuSkaits>25</studentuSkaits>
+        <limenis>vidējs</limenis> 
+    </kurss> 
+    <kurss id="2">
+        <nosaukums>Python pamati</nosaukums> 
+        <apraksts>Šis kurss ir par Python programmēšanas valodas pamatiem.</apraksts> 
+        <pasniedzejs>Anna Kalniņa</pasniedzejs> 
+        <ilgums>30</ilgums>
+        <studentuSkaits>20</studentuSkaits>
+        <limenis>iesācēji</limenis>
+    </kurss>
+    <kurss id="3">
+        <nosaukums>Web izstrāde ar JavaScript</nosaukums> 
+        <apraksts>Šis kurss ir par web izstrādi, izmantojot JavaScript.</apraksts> 
+        <pasniedzejs>Pēteris Ozoliņš</pasniedzejs> 
+        <ilgums>35</ilgums>
+        <studentuSkaits>30</studentuSkaits>
+        <limenis>profesionāls</limenis>
+    </kurss> 
+</rvtkursi>
